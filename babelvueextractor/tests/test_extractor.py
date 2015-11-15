@@ -1,0 +1,45 @@
+import unittest
+
+from babel.messages.extract import DEFAULT_KEYWORDS
+
+from babelvueextractor.extract import extract_vue
+from babelvueextractor.tests.utils import FileMock
+
+
+class TestMessagesExtractor(unittest.TestCase):
+    def test_empty_template(self):
+        template = FileMock("")
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
+        self.assertEqual(list(), list(result))
+
+    def test_no_messages(self):
+        template = FileMock("""
+        <div>
+            <h1>Foo</h1>
+            <p>Lore ipsum delore ...</p>
+        </div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
+        self.assertEqual(list(), list(result))
+
+    def test_gettext(self):
+        template = FileMock("""
+        <div>
+            {{ gettext('Foo') }}
+        </div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
+        self.assertEqual(list(result), [
+            (3, u'gettext', u"Foo", None)
+        ])
+
+    def test_underscore(self):
+        template = FileMock("""
+        <div>
+            {{ _("Bar") }}
+        </div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
+        self.assertEqual(list(result), [
+            (3, '_', u'Bar', None)
+        ])
