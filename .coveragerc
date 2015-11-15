@@ -3,5 +3,7 @@ branch = True
 source = babelvueextractor
 omit = site-packages
 
-[html]
-directory = coverage
+[report]
+omit =
+    */python?.?/*
+    */site-packages/nose/*
