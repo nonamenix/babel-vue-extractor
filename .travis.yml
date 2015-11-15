@@ -13,5 +13,5 @@ install:
 script:
   - nosetests  --with-coverage --cover-package=babelvueextractor
 
-#after_success:
-#  coveralls
+after_success:
+  coveralls
