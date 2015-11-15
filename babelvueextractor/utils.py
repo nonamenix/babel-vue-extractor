@@ -1,6 +1,5 @@
 import re
 import six
-from raven.utils.encoding import force_text
 
 
 def is_protected_type(obj):
