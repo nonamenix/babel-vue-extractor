@@ -36,7 +36,7 @@ setup(
     ],
     keywords='vuejs babel',
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    install_requires=['babel'],
+    install_requires=['babel', 'six'],
     extras_require={
         'dev': ['check-manifest', 'nose'],
         'test': ['coverage'],
