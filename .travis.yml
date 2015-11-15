@@ -6,6 +6,13 @@ python:
 #  - "3.5.0b3"
 #  - "nightly"
 # command to install dependencies
-install: "pip install -r requirements.txt"
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
 # command to run tests
-script: nosetests
+script:
+  - nosetests
+  - coverage run
+
+after_success:
+  coveralls
