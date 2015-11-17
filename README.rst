@@ -1,5 +1,5 @@
-babel-vue-extractor
-===================
+Babel extractor for vue.js
+==========================
 
 |Build Status| |Coverage Status|
 
@@ -10,6 +10,27 @@ http://vuejs.org/.
 
 *Babel* — Internationalization library for Python. Site:
 http://babel.pocoo.org/.
+
+.. image:: babel_vuejs.png
+
+Install
+-------
+
+  pip install git+https://github.com/nonamenix/babel-vue-extractor.git
+
+Usage
+-----
+
+Add to your babel config
+
+  [babelvueextractor.extract.extract_vue: **.vue]
+
+Issue Tracking
+--------------
+
+  GitHub: `https://github.com/nonamenix/babel-vue-extractor/issues <https://github.com/nonamenix/babel-vue-extractor/issues>`_
+
+
 
 .. |Build Status| image:: https://travis-ci.org/nonamenix/babel-vue-extractor.svg
    :target: https://travis-ci.org/nonamenix/babel-vue-extractor
