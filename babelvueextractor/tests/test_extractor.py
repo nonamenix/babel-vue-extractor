@@ -47,7 +47,7 @@ class TestMessagesExtractor(unittest.TestCase):
 
     def test_babel(self):
         method = 'babelvueextractor.extract.extract_vue'
-        fileobj = open('./templates/for_babel.vue')
+        fileobj = open('babelvueextractor/tests/templates/for_babel.vue')
         result = extract(method, fileobj)
         self.assertEqual(list(result), [
             (1, u'Привет123', None, None),
