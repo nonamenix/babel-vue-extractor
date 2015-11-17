@@ -19,7 +19,7 @@ def read(*parts):
 
 setup(
     name='babel-vue-extractor',
-    version='0.1.1',
+    version='0.1.2',
     description='A plugin for babel to work with vue.js templates',
     long_description=read('README.rst'),
     url='https://github.com/nonamenix/babel-vue-extractor',
