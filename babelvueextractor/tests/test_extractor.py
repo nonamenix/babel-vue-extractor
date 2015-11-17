@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 import unittest
 
-from babel.messages.extract import DEFAULT_KEYWORDS
+from babel.messages.extract import DEFAULT_KEYWORDS, extract
 
 from babelvueextractor.extract import extract_vue
 from babelvueextractor.tests.utils import FileMock
@@ -42,4 +43,13 @@ class TestMessagesExtractor(unittest.TestCase):
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
         self.assertEqual(list(result), [
             (3, '_', u'Bar', None)
+        ])
+
+    def test_babel(self):
+        method = 'babelvueextractor.extract.extract_vue'
+        fileobj = open('./templates/for_babel.vue')
+        result = extract(method, fileobj)
+        self.assertEqual(list(result), [
+            (1, u'Привет123', None, None),
+            (2, u'привет123', None, None)
         ])
