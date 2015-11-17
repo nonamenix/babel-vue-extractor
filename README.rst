@@ -16,19 +16,19 @@ http://babel.pocoo.org/.
 Install
 -------
 
-  pip install git+https://github.com/nonamenix/babel-vue-extractor.git
+    pip install git+https://github.com/nonamenix/babel-vue-extractor.git
 
 Usage
 -----
 
 Add to your babel config
 
-  [babelvueextractor.extract.extract_vue: **.vue]
+    [babelvueextractor.extract.extract_vue: **.vue]
 
 Issue Tracking
 --------------
 
-  GitHub: `https://github.com/nonamenix/babel-vue-extractor/issues <https://github.com/nonamenix/babel-vue-extractor/issues>`_
+GitHub: `https://github.com/nonamenix/babel-vue-extractor/issues <https://github.com/nonamenix/babel-vue-extractor/issues>`_
 
 
 
