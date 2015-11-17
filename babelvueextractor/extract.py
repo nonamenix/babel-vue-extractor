@@ -50,4 +50,4 @@ def extract_vue(fileobj, keywords, comment_tags, options):
             else:
                 messages = _get_messages(matched['messages'])
 
-                yield t.lineno, matched['funcname'], messages, None
+                yield t.lineno, matched['funcname'], messages, []

@@ -31,7 +31,7 @@ class TestMessagesExtractor(unittest.TestCase):
         """)
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
         self.assertEqual(list(result), [
-            (3, u'gettext', u"Foo", None)
+            (3, u'gettext', u"Foo", [])
         ])
 
     def test_underscore(self):
@@ -42,7 +42,7 @@ class TestMessagesExtractor(unittest.TestCase):
         """)
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
         self.assertEqual(list(result), [
-            (3, '_', u'Bar', None)
+            (3, '_', u'Bar', [])
         ])
 
     def test_babel(self):
@@ -50,6 +50,6 @@ class TestMessagesExtractor(unittest.TestCase):
         fileobj = open('babelvueextractor/tests/templates/for_babel.vue')
         result = extract(method, fileobj)
         self.assertEqual(list(result), [
-            (1, u'Привет123', None, None),
-            (2, u'привет123', None, None)
+            (1, u'Привет123', [], None),
+            (2, u'привет123', [], None)
         ])
