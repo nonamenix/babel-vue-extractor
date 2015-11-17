@@ -19,9 +19,9 @@ def read(*parts):
 
 setup(
     name='babel-vue-extractor',
-    version='0.1',
+    version='0.1.1',
     description='A plugin for babel to work with vue.js templates',
-    long_description=read('README.md') + u'\n\n' + read('CHANGELOG.md'),
+    long_description=read('README.rst') + u'\n\n' + read('CHANGELOG.rst'),
     url='https://github.com/nonamenix/babel-vue-extractor',
     author='Danil Ivanov',
     author_email='nonamenix@gmail.com',
