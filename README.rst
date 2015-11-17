@@ -39,3 +39,4 @@ GitHub: `https://github.com/nonamenix/babel-vue-extractor/issues <https://github
 .. |Coverage Status| image:: https://coveralls.io/repos/nonamenix/babel-vue-extractor/badge.svg?branch=master&service=bitbucket
    :target: https://coveralls.io/github/nonamenix/babel-vue-extractor?branch=master
    :alt: Coverage Status
+   
