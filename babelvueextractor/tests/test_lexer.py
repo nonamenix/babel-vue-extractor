@@ -1,5 +1,4 @@
 import unittest
-
 from babelvueextractor.lexer import Lexer, Token, TOKEN_TEXT, TOKEN_VAR, TOKEN_COMMENT, TOKEN_RAW_HTML, TOKEN_CONST, \
     TOKEN_DOUBLE_WAY_BINDING
 
@@ -71,3 +70,21 @@ class TestLexer(unittest.TestCase):
                 Token(token_type=4, contents="Blablabla"),
                 Token(token_type=0, contents="</span></div>")
             ])
+
+    def test_str(self):
+        t = Token(token_type=TOKEN_RAW_HTML, contents='<!DOCTYPE html>' +
+              '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
+              '<title>HTML Document</title></head><body><p><b></b></p></body></html>')
+        self.assertEqual('<Raw token: "<!DOCTYPE html><html...">', t.__str__())
+
+    def test_repr(self):
+        t = Token(token_type=TOKEN_RAW_HTML, contents='<body><p><b></b></p></body></html>')
+        self.assertEqual('Token(token_type=4, contents="<body><p><b></b></p></body></html>")', t.__repr__())
+
+    def test_token_name(self):
+        self.assertEqual(Token(token_type=0, contents='').token_name, 'Text')
+        self.assertEqual(Token(token_type=1, contents='').token_name, 'Var')
+        self.assertEqual(Token(token_type=2, contents='').token_name, 'Const')
+        self.assertEqual(Token(token_type=3, contents='').token_name, 'Comment')
+        self.assertEqual(Token(token_type=4, contents='').token_name, 'Raw')
+        self.assertEqual(Token(token_type=5, contents='').token_name, 'Binding')

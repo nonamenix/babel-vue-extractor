@@ -36,7 +36,7 @@ GitHub: `https://github.com/nonamenix/babel-vue-extractor/issues <https://github
    :target: https://travis-ci.org/nonamenix/babel-vue-extractor
    :alt: Build Status
 
-.. |Coverage Status| image:: https://coveralls.io/repos/nonamenix/babel-vue-extractor/badge.svg?branch=master&service=github&v=0.1.3
+.. |Coverage Status| image:: https://coveralls.io/repos/nonamenix/babel-vue-extractor/badge.svg?branch=master&service=github&v=0.1.3.1
    :target: https://coveralls.io/github/nonamenix/babel-vue-extractor?branch=master
    :alt: Coverage Status
    
