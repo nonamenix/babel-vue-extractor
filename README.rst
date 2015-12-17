@@ -16,12 +16,16 @@ http://babel.pocoo.org/.
 Install
 -------
 
+.. code::
+
     pip install git+https://github.com/nonamenix/babel-vue-extractor.git
 
 Usage
 -----
 
 Add to your babel config
+
+.. code::
 
     [babelvueextractor.extract.extract_vue: **.vue]
 
