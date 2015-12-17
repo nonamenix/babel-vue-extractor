@@ -13,6 +13,11 @@ class TestUtils(unittest.TestCase):
             _get_messages('"foo, bar", "bar"'),
             [u'foo, bar', u'bar']
         )
+        self.assertRaises(
+            ValueError,
+            _get_messages,
+            "a + b"
+        )
 
     def test_is_protected_type_numeric(self):
         assert is_protected_type(5)

@@ -13,7 +13,6 @@ func_re = re.compile('(?P<funcname>(\w+|_))\((?P<messages>.*)\)')
 def _get_messages(raw_messages_string):
     try:
         messages = literal_eval(u'[%s]' % unicode(raw_messages_string))
-
     except:
         raise
     messages = map(force_text, messages)
