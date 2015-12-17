@@ -1,4 +1,6 @@
 import re
+from ast import literal_eval
+
 from babelvueextractor.lexer import Lexer, TOKEN_VAR, TOKEN_CONST, TOKEN_COMMENT, TOKEN_RAW_HTML, \
     TOKEN_DOUBLE_WAY_BINDING
 from babelvueextractor.utils import force_text
@@ -9,13 +11,15 @@ func_re = re.compile('(?P<funcname>(\w+|_))\((?P<messages>.*)\)')
 
 
 def _get_messages(raw_messages_string):
-    messages = []
+    try:
+        messages = literal_eval(u'[%s]' % unicode(raw_messages_string))
 
-    messages = eval("[{}]".format(raw_messages_string))  # a little bit of evil
+    except:
+        raise
     messages = map(force_text, messages)
 
-    if len(messages) <= 1:
-        messages = messages[0]
+    if len(messages) == 1:
+        return messages[0]
 
     return messages
 

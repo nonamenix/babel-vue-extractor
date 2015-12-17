@@ -59,7 +59,7 @@ class TestMessagesExtractor(unittest.TestCase):
 
     def test_babel(self):
         method = 'babelvueextractor.extract.extract_vue'
-        fileobj = open('babelvueextractor/templates/templates/for_babel.vue')
+        fileobj = open('babelvueextractor/tests/templates/for_babel.vhtml')
         result = extract(method, fileobj)
 
         self.assertListEqual(list(result), [
