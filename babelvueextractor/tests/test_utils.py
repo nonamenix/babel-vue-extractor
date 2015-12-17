@@ -2,11 +2,18 @@
 
 import unittest
 
+from babelvueextractor.extract import _get_messages
 from babelvueextractor.utils import is_protected_type, force_text, smart_split
 import datetime
 
 
 class TestUtils(unittest.TestCase):
+    def test_get_messages(self):
+        self.assertEqual(
+            _get_messages('"foo, bar", "bar"'),
+            [u'foo, bar', u'bar']
+        )
+
     def test_is_protected_type_numeric(self):
         assert is_protected_type(5)
         assert is_protected_type(5L)

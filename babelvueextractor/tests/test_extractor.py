@@ -45,11 +45,24 @@ class TestMessagesExtractor(unittest.TestCase):
             (3, '_', u'Bar', [])
         ])
 
+    def test_commas(self):
+        template = FileMock("""
+            {{ gettext('Hello, User') }}
+            {{ gettext("You're") }}
+        """)
+
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
+        self.assertEqual(list(result), [
+            (2, 'gettext', u'Hello, User', []),
+            (3, 'gettext', u"You're", [])
+        ])
+
     def test_babel(self):
         method = 'babelvueextractor.extract.extract_vue'
-        fileobj = open('babelvueextractor/tests/templates/for_babel.vue')
+        fileobj = open('babelvueextractor/templates/templates/for_babel.vue')
         result = extract(method, fileobj)
-        self.assertEqual(list(result), [
-            (1, u'Привет123', [], None),
+
+        self.assertListEqual(list(result), [
+            (1, u'Привет, User', [], None),
             (2, u'привет123', [], None)
         ])

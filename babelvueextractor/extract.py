@@ -10,11 +10,9 @@ func_re = re.compile('(?P<funcname>(\w+|_))\((?P<messages>.*)\)')
 
 def _get_messages(raw_messages_string):
     messages = []
-    for message in raw_messages_string.split(','):
-        if message[0] in ['"', "'"]:
-            message = message.strip(message[0])
 
-        messages.append(force_text(message))
+    messages = eval("[{}]".format(raw_messages_string))  # a little bit of evil
+    messages = map(force_text, messages)
 
     if len(messages) <= 1:
         messages = messages[0]
@@ -49,5 +47,6 @@ def extract_vue(fileobj, keywords, comment_tags, options):
                 pass
             else:
                 messages = _get_messages(matched['messages'])
+                # messages = matched['messages']
 
                 yield t.lineno, matched['funcname'], messages, []
