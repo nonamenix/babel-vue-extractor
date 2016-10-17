@@ -27,7 +27,6 @@ setup(
     author_email='nonamenix@gmail.com',
     license='Apache Software License',
     classifiers=[
-        'Development Status :: 1.3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Internationalization',
         'License :: OSI Approved :: Apache Software License',
