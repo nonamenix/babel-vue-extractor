@@ -86,3 +86,22 @@ class TestMessagesExtractor(unittest.TestCase):
         self.assertEqual(list(result), [
             (5, u'gettext', u'{number} season', [])
         ])
+
+    def test_directives(self):
+        template = FileMock("""
+        <div v-text="gettext('Sometext')"></div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
+        self.assertListEqual(list(result), [(2, u'gettext', u'Sometext', [])])
+
+    def test_directives_with_inner_tag(self):
+        template = FileMock("""
+        <div v-text="gettext('Sometext')">
+        {{ gettext('Hello') }}
+        </div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], {})
+        self.assertListEqual(list(result), [
+            (2, u'gettext', u'Sometext', []),
+            (3, u'gettext', u'Hello', [])
+        ])

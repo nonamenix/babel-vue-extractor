@@ -1,11 +1,18 @@
 import re
 from ast import literal_eval
 
-from babelvueextractor.lexer import Lexer, TOKEN_VAR, TOKEN_CONST, TOKEN_COMMENT, TOKEN_RAW_HTML, \
-    TOKEN_DOUBLE_WAY_BINDING
+from babelvueextractor.lexer import (
+    Lexer,
+    TOKEN_VAR,
+    TOKEN_CONST,
+    TOKEN_COMMENT,
+    TOKEN_RAW_HTML,
+    TOKEN_DOUBLE_WAY_BINDING,
+    TOKEN_DIRECTIVE
+)
 from babelvueextractor.utils import force_text
 
-TOKENS = [TOKEN_VAR, TOKEN_CONST, TOKEN_COMMENT, TOKEN_RAW_HTML, TOKEN_DOUBLE_WAY_BINDING]
+TOKENS = [TOKEN_VAR, TOKEN_CONST, TOKEN_COMMENT, TOKEN_RAW_HTML, TOKEN_DOUBLE_WAY_BINDING, TOKEN_DIRECTIVE]
 
 func_re = re.compile('(?P<funcname>(\w+|_))\((?P<messages>.*?)\)+?')
 
