@@ -11,7 +11,7 @@ http://vuejs.org/.
 *Babel* — Internationalization library for Python. Site:
 http://babel.pocoo.org/.
 
-.. image:: babel_vuejs.png
+.. image:: https://raw.githubusercontent.com/nonamenix/babel-vue-extractor/master/babel_vuejs.png
 
 Install
 -------

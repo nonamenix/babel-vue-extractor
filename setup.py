@@ -1,4 +1,5 @@
-"""A setuptools based setup module for babel-angular-gettext
+"""A setuptools based setup module for babel-vue-extractor
+
 Based on:
 https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
@@ -19,7 +20,7 @@ def read(*parts):
 
 setup(
     name='babel-vue-extractor',
-    version='0.1.8',
+    version='0.2',
     description='A plugin for babel to work with vue.js templates',
     long_description=read('README.rst'),
     url='https://github.com/nonamenix/babel-vue-extractor',
