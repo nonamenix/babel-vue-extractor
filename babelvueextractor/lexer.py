@@ -7,6 +7,7 @@ TOKEN_CONST = 2
 TOKEN_COMMENT = 3
 TOKEN_RAW_HTML = 4
 TOKEN_DOUBLE_WAY_BINDING = 5
+TOKEN_DIRECTIVE = 6
 
 TOKEN_MAPPING = {
     TOKEN_TEXT: 'Text',
@@ -14,7 +15,8 @@ TOKEN_MAPPING = {
     TOKEN_CONST: 'Const',
     TOKEN_DOUBLE_WAY_BINDING: 'Binding',
     TOKEN_COMMENT: 'Comment',
-    TOKEN_RAW_HTML: 'Raw'
+    TOKEN_RAW_HTML: 'Raw',
+    TOKEN_DIRECTIVE: 'Directive',
 }
 
 # template syntax constants
@@ -32,13 +34,17 @@ DOUBLE_WAY_BINDING_START = '{{@'
 DOUBLE_WAY_BINDING_END = '}}'
 COMMENT_START = '<!--'
 COMMENT_END = '-->'
+DIRECTIVE_START = 'v-text="'
+DIRECTIVE_END = '"'
 
-tag_re = (re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
+tag_re = (re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
     re.escape(CONST_START), re.escape(CONST_END),
     re.escape(RAW_HTML_TAG_START), re.escape(RAW_HTML_TAG_END),
     re.escape(VARIABLE_TAG_START), re.escape(VARIABLE_TAG_END),
     re.escape(COMMENT_START), re.escape(COMMENT_END),
-    re.escape(DOUBLE_WAY_BINDING_START), re.escape(DOUBLE_WAY_BINDING_END))))
+    re.escape(DOUBLE_WAY_BINDING_START), re.escape(DOUBLE_WAY_BINDING_END),
+    re.escape(DIRECTIVE_START), re.escape(DIRECTIVE_END),
+)))
 
 
 class Token(object):
@@ -131,6 +137,10 @@ class Lexer(object):
             elif VARIABLE_TAG_START in token_string:
                 token_type = TOKEN_VAR
                 content = token_string[2:-2].strip()
+
+            elif DIRECTIVE_START in token_string:
+                token_type = TOKEN_DIRECTIVE
+                content = token_string[8:-1].strip()
 
         token = Token(token_type, content)
         token.lineno = self.lineno
