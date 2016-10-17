@@ -55,16 +55,3 @@ class TestUtils(unittest.TestCase):
 
     def test_force_text_unicode(self):
         self.assertEqual(force_text(u'привет'), u'привет')
-
-    def test_smart_split(self):
-        self.assertEqual(
-            list(smart_split(r'This is "a person\'s" test.')),
-            ['This', 'is', '"a person\\\'s"', 'test.'])
-
-        self.assertEqual(
-            list(smart_split(r"Another 'person\'s' test.")),
-            ['Another', "'person\\'s'", 'test.'])
-
-        self.assertEqual(
-            list(smart_split(r'A "\"funky\" style" test.')),
-            ['A', '"\\"funky\\" style"', 'test.'])

@@ -57,34 +57,3 @@ def force_text(s, encoding='utf-8', strings_only=False, errors='strict'):
             s = ' '.join([force_text(arg, encoding, strings_only,
                                      errors) for arg in s])
     return s
-
-
-smart_split_re = re.compile(r"""
-    ((?:
-        [^\s'"]*
-        (?:
-            (?:"(?:[^"\\]|\\.)*" | '(?:[^'\\]|\\.)*')
-            [^\s'"]*
-        )+
-    ) | \S+)
-""", re.VERBOSE)
-
-
-def smart_split(text):
-    r"""
-    Generator that splits a string by spaces, leaving quoted phrases together.
-    Supports both single and double quotes, and supports escaping quotes with
-    backslashes. In the output, strings will keep their initial and trailing
-    quote marks and escaped quotes will remain escaped (the results can then
-    be further processed with unescape_string_literal()).
-
-    >>> list(smart_split(r'This is "a person\'s" test.'))
-    ['This', 'is', '"a person\\\'s"', 'test.']
-    >>> list(smart_split(r"Another 'person\'s' test."))
-    ['Another', "'person\\'s'", 'test.']
-    >>> list(smart_split(r'A "\"funky\" style" test.'))
-    ['A', '"\\"funky\\" style"', 'test.']
-    """
-    text = force_text(text)
-    for bit in smart_split_re.finditer(text):
-        yield bit.group(0)
