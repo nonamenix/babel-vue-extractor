@@ -12,6 +12,11 @@ install:
 # command to run tests
 script:
   - nosetests  --with-coverage --cover-package=babelvueextractor
+deploy:
+  provider: pypi
+  user: nonamenix
+  on:
+    branch: master
 
 after_success:
   coveralls
