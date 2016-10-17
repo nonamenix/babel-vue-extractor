@@ -1,22 +1,18 @@
 language: python
 python:
-  - "2.7"
-#  - "3.3"
-#  - "3.4"
-#  - "3.5.0b3"
-#  - "nightly"
-# command to install dependencies
+- '2.7'
 install:
-  - pip install -r requirements.txt
-  - pip install coveralls
-# command to run tests
+- pip install -r requirements.txt
+- pip install coveralls
 script:
-  - nosetests  --with-coverage --cover-package=babelvueextractor
+- nosetests  --with-coverage --cover-package=babelvueextractor
 deploy:
   provider: pypi
+  distributions: sdist
+  server: https://testpypi.python.org/pypi
   user: nonamenix
+  password:
+    secure: TM/5e69s+xMqslF3kYXO3YH44oWvsh2BlZEZIQ13o9TBteqCYv/dTgxVEFXef6B+0jA+QJE8RYWEju7M2AjefS7hX2yfowxV+YUAa9V3W7SQvJWyoixxJJ32cYKLcYUgXPhQezdeLOmsi7YxbMx54UVfMT100axjBn+9d4ffLd4AalzGJ0IiihNSligUT0e6veDb/f0Gxm/q7R2XEtXRxKws91s/C5re9DdsmddTL9tXGZaGgxVIoE3kxuTvrK8Gs9jWTobsiwzNj+yDgaz0pX8Tg9S+mdEhYlvtOeQEiNcCkUnDMi4ekFXyCRUVUbEJGVbRxXQkOxnImoVbFvJzQ67HxD/VXXHkMAtmZ5pVSPvCvwgtFDWkLy4pn7d1iu0wNIMWMIRBfwx3Tg6GEfmY8s3Sj0XUusjNGRfwSrcAlo5KWMa+8lCQPB3xJzB/1kZXLY1t2Bw9Np78lmA+O4P7k66cN1CwFVbC3OCjJBxBkJoIxsIgiVPgtyJo1dV0FsRGdLFZG3KLzM76vsBN459kkAf4F/iODwODvz8MYoKb1wSFr9MZwm4E78D4uUVV7NZDfX3i6SJENgTQbFccq/YOq2wvqX77YBavT0T4qCy8bwR7h5i9IZjdsS+doWvlM4ApK52GBVhkHYhBFMLodSj4G6zplt9tFkhNykh/AO72wdE=
   on:
     branch: master
-
-after_success:
-  coveralls
+after_success: coveralls
