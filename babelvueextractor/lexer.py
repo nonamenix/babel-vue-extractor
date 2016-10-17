@@ -1,5 +1,4 @@
 import re
-from babelvueextractor.utils import smart_split
 
 TOKEN_TEXT = 0
 TOKEN_VAR = 1

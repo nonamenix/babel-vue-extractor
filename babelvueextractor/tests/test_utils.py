@@ -3,7 +3,7 @@
 import unittest
 
 from babelvueextractor.extract import _get_messages
-from babelvueextractor.utils import is_protected_type, force_text, smart_split
+from babelvueextractor.utils import is_protected_type, force_text
 import datetime
 
 
