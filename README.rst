@@ -18,7 +18,7 @@ Install
 
 .. code::
 
-    pip install git+https://github.com/nonamenix/babel-vue-extractor.git
+    pip install babel-vue-extractor
 
 Usage
 -----
