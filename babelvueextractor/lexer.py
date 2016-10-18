@@ -1,5 +1,4 @@
 import re
-from babelvueextractor.utils import smart_split
 
 TOKEN_TEXT = 0
 TOKEN_VAR = 1
@@ -69,21 +68,6 @@ class Token(object):
     @property
     def token_name(self):
         return TOKEN_MAPPING[self.token_type]
-
-    def split_contents(self):
-        split = []
-        bits = iter(smart_split(self.contents))
-        for bit in bits:
-            # Handle translation-marked template pieces
-            if bit.startswith('_("') or bit.startswith("_('"):
-                sentinal = bit[2] + ')'
-                trans_bit = [bit]
-                while not bit.endswith(sentinal):
-                    bit = next(bits)
-                    trans_bit.append(bit)
-                bit = ' '.join(trans_bit)
-            split.append(bit)
-        return split
 
 
 class Lexer(object):
