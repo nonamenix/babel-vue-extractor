@@ -37,6 +37,8 @@ class TestUtils(unittest.TestCase):
     def test_is_protected_type_func(self):
         assert not is_protected_type(lambda x: x)
 
+
+class TestForceText(unittest.TestCase):
     def test_force_text_list(self):
         self.assertEqual(force_text(['a', 'b']), u"['a', 'b']")
 
@@ -55,3 +57,21 @@ class TestUtils(unittest.TestCase):
 
     def test_force_text_unicode(self):
         self.assertEqual(force_text(u'привет'), u'привет')
+
+
+class TestForceTextUnicode(unittest.TestCase):
+    def setUp(self):
+        class A(object):
+            title = 'title'
+
+            def __init__(self, title):
+                self.title = title
+
+            def __unicode__(self):
+                return u"%s" % self.title
+
+        self.A = A
+
+    def test_obj_with_unicode(self):
+        a = self.A('title')
+        self.assertEqual(force_text(a), 'title')
