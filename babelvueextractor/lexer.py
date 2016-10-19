@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import re
 
 TOKEN_TEXT = 0
@@ -36,14 +37,14 @@ COMMENT_END = '-->'
 DIRECTIVE_START = 'v-text="'
 DIRECTIVE_END = '"'
 
-tag_re = (re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
+tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
     re.escape(CONST_START), re.escape(CONST_END),
     re.escape(RAW_HTML_TAG_START), re.escape(RAW_HTML_TAG_END),
     re.escape(VARIABLE_TAG_START), re.escape(VARIABLE_TAG_END),
     re.escape(COMMENT_START), re.escape(COMMENT_END),
     re.escape(DOUBLE_WAY_BINDING_START), re.escape(DOUBLE_WAY_BINDING_END),
     re.escape(DIRECTIVE_START), re.escape(DIRECTIVE_END),
-)))
+))
 
 
 class Token(object):
