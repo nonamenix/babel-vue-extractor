@@ -29,6 +29,18 @@ Add to your babel config
 
     [babelvueextractor.extract.extract_vue: **.vue]
 
+
+Usage in .vhtml files
+---------------------
+
+.. code::
+
+    <h1>{{ gettext('Hello') }}</h1>
+    <p> {{ ngettext('Foo', 'Foos', 1) }} </p>
+    <p> {{ gettext('Processed by filter')|somefilter }} </p>
+    <div v-text="gettext('Sometext')"></div>
+
+
 Issue Tracking
 --------------
 
