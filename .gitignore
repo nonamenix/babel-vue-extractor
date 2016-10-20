@@ -58,3 +58,6 @@ target/
 
 # IDEA
 .idea/
+
+# Virtual Envs
+.venv*
