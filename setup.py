@@ -11,6 +11,9 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
+with open("VERSION") as version_file:
+    version = version_file.read().strip()
+
 
 def read(*parts):
     filename = path.join(path.dirname(__file__), *parts)
@@ -20,7 +23,7 @@ def read(*parts):
 
 setup(
     name='babel-vue-extractor',
-    version='1.0',
+    version=version,
     description='A plugin for babel to work with vue.js templates',
     long_description=read('README.rst'),
     url='https://github.com/nonamenix/babel-vue-extractor',
