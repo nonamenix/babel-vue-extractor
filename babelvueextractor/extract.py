@@ -28,11 +28,9 @@ def extract_vue(fileobj, keywords, comment_tags, options):
     :rtype: ``iterator``
     """
     contents = fileobj.read()
-    u = six.text_type
-    if not isinstance(contents, u):
-        contents = u(contents, encoding=options.get('encoding', 'utf-8'))
+    u = lambda s: s if isinstance(s, six.text_type) else s.decode(encoding=options.get('encoding', 'utf-8'))
+    contents = u(contents)
     lexer = Lexer(contents, None)
-    u = functools.partial(u, encoding='utf-8')
     for t in lexer.tokenize():  # type: Token
         if t.token_type in TOKENS:
             try:
