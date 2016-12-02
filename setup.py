@@ -11,16 +11,20 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
+PROJECT_DIR = path.dirname(__file__)
+
 
 def read(*parts):
-    filename = path.join(path.dirname(__file__), *parts)
+    filename = path.join(PROJECT_DIR, *parts)
     with open(filename, encoding='utf-8') as fp:
         return fp.read()
 
+REQUIREMENTS_FILE = 'requirements.txt'
+REQUIREMENTS = open(path.join(PROJECT_DIR, REQUIREMENTS_FILE)).readlines()
 
 setup(
     name='babel-vue-extractor',
-    version='1.0',
+    version=read('VERSION'),
     description='A plugin for babel to work with vue.js templates',
     long_description=read('README.rst'),
     url='https://github.com/nonamenix/babel-vue-extractor',
@@ -36,11 +40,9 @@ setup(
     ],
     keywords='vuejs babel',
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    install_requires=['babel', 'six'],
+    install_requires=REQUIREMENTS,
     extras_require={
         'dev': ['check-manifest', 'nose'],
         'test': ['coverage'],
     },
-    package_data={},
-    data_files=[],
 )
