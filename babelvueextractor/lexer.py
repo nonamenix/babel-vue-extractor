@@ -34,16 +34,19 @@ DOUBLE_WAY_BINDING_START = '{{@'
 DOUBLE_WAY_BINDING_END = '}}'
 COMMENT_START = '<!--'
 COMMENT_END = '-->'
-DIRECTIVE_START = 'v-text="'
-DIRECTIVE_END = '"'
+TEXT_DIRECTIVE_START = 'v-text="'
+TEXT_DIRECTIVE_END = '"'
+HTML_DIRECTIVE_START = 'v-html="'
+HTML_DIRECTIVE_END = '"'
 
-tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
+tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
     re.escape(CONST_START), re.escape(CONST_END),
     re.escape(RAW_HTML_TAG_START), re.escape(RAW_HTML_TAG_END),
     re.escape(VARIABLE_TAG_START), re.escape(VARIABLE_TAG_END),
     re.escape(COMMENT_START), re.escape(COMMENT_END),
     re.escape(DOUBLE_WAY_BINDING_START), re.escape(DOUBLE_WAY_BINDING_END),
-    re.escape(DIRECTIVE_START), re.escape(DIRECTIVE_END),
+    re.escape(TEXT_DIRECTIVE_START), re.escape(TEXT_DIRECTIVE_END),
+    re.escape(HTML_DIRECTIVE_START), re.escape(HTML_DIRECTIVE_END),
 ))
 
 
@@ -123,7 +126,11 @@ class Lexer(object):
                 token_type = TOKEN_VAR
                 content = token_string[2:-2].strip()
 
-            elif DIRECTIVE_START in token_string:
+            elif TEXT_DIRECTIVE_START in token_string:
+                token_type = TOKEN_DIRECTIVE
+                content = token_string[8:-1].strip()
+
+            elif HTML_DIRECTIVE_START in token_string:
                 token_type = TOKEN_DIRECTIVE
                 content = token_string[8:-1].strip()
 

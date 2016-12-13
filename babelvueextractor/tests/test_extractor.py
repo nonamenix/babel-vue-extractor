@@ -109,7 +109,7 @@ class TestMessagesExtractor(unittest.TestCase):
             (6, u'gettext', u'bar', []),
         ])
 
-    def test_directives(self):
+    def test_text_directives(self):
         template = FileMock("""
         <div v-text="gettext('Sometext')"></div>
         """)
@@ -127,3 +127,11 @@ class TestMessagesExtractor(unittest.TestCase):
             (2, u'gettext', u'Sometext', []),
             (3, u'gettext', u'Hello', [])
         ])
+
+    def test_html_directives(self):
+        template = FileMock("""
+        <div v-html="gettext('Sometext')"></div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
+        self.assertListEqual(list(result), [(2, u'gettext', u'Sometext', [])])
+
