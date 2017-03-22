@@ -1,5 +1,8 @@
 Version History
 ===
+### 1.2.1
+* add support for :text attributes
+* some refactoring
 
 ### 1.2
 

@@ -39,6 +39,7 @@ Usage in .vhtml files
     <p> {{ ngettext('Foo', 'Foos', 1) }} </p>
     <p> {{ gettext('Processed by filter')|somefilter }} </p>
     <div v-text="gettext('Sometext')"></div>
+    <div :text="gettext('Sometext')"></div>
 
 
 Issue Tracking
