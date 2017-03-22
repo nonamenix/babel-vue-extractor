@@ -38,8 +38,10 @@ TEXT_DIRECTIVE_START = 'v-text="'
 TEXT_DIRECTIVE_END = '"'
 HTML_DIRECTIVE_START = 'v-html="'
 HTML_DIRECTIVE_END = '"'
+COLON_TEXT_DIRECTIVE_START = ':text="'
+COLON_TEXT_DIRECTIVE_END = '"'
 
-tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
+tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
     re.escape(CONST_START), re.escape(CONST_END),
     re.escape(RAW_HTML_TAG_START), re.escape(RAW_HTML_TAG_END),
     re.escape(VARIABLE_TAG_START), re.escape(VARIABLE_TAG_END),
@@ -47,6 +49,7 @@ tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' 
     re.escape(DOUBLE_WAY_BINDING_START), re.escape(DOUBLE_WAY_BINDING_END),
     re.escape(TEXT_DIRECTIVE_START), re.escape(TEXT_DIRECTIVE_END),
     re.escape(HTML_DIRECTIVE_START), re.escape(HTML_DIRECTIVE_END),
+    re.escape(COLON_TEXT_DIRECTIVE_START), re.escape(COLON_TEXT_DIRECTIVE_END),
 ))
 
 
