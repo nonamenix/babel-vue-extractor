@@ -128,6 +128,18 @@ class TestMessagesExtractor(unittest.TestCase):
             (3, u'gettext', u'Hello', [])
         ])
 
+    def test_directives_with_inner_colon_tag(self):
+        template = FileMock("""
+        <div :text="gettext('Sometext')">
+        {{ gettext('Hello') }}
+        </div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
+        self.assertListEqual(list(result), [
+            (2, u'gettext', u'Sometext', []),
+            (3, u'gettext', u'Hello', [])
+        ])
+
     def test_html_directives(self):
         template = FileMock("""
         <div v-html="gettext('Sometext')"></div>

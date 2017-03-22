@@ -34,22 +34,23 @@ DOUBLE_WAY_BINDING_START = '{{@'
 DOUBLE_WAY_BINDING_END = '}}'
 COMMENT_START = '<!--'
 COMMENT_END = '-->'
+HTML_ATTRIBUTE_END = '"'
 TEXT_DIRECTIVE_START = 'v-text="'
-TEXT_DIRECTIVE_END = '"'
 HTML_DIRECTIVE_START = 'v-html="'
-HTML_DIRECTIVE_END = '"'
-COLON_TEXT_DIRECTIVE_START = ':text="'
-COLON_TEXT_DIRECTIVE_END = '"'
+COLON_TEXT_DIRECTIVE_START = '\x3atext="'  # 0x3a = ":"
 
-tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s)' % (
+tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|(?:%s|%s|%s).*?%s)' % (
     re.escape(CONST_START), re.escape(CONST_END),
     re.escape(RAW_HTML_TAG_START), re.escape(RAW_HTML_TAG_END),
     re.escape(VARIABLE_TAG_START), re.escape(VARIABLE_TAG_END),
     re.escape(COMMENT_START), re.escape(COMMENT_END),
     re.escape(DOUBLE_WAY_BINDING_START), re.escape(DOUBLE_WAY_BINDING_END),
-    re.escape(TEXT_DIRECTIVE_START), re.escape(TEXT_DIRECTIVE_END),
-    re.escape(HTML_DIRECTIVE_START), re.escape(HTML_DIRECTIVE_END),
-    re.escape(COLON_TEXT_DIRECTIVE_START), re.escape(COLON_TEXT_DIRECTIVE_END),
+
+    re.escape(TEXT_DIRECTIVE_START),
+    re.escape(HTML_DIRECTIVE_START),
+    re.escape(COLON_TEXT_DIRECTIVE_START),
+
+    re.escape(HTML_ATTRIBUTE_END),
 ))
 
 
@@ -108,34 +109,50 @@ class Lexer(object):
         content = token_string
 
         if in_tag:
+            _start, _end = None, 0
 
-            if DOUBLE_WAY_BINDING_START in token_string:
+            if token_string.startswith(DOUBLE_WAY_BINDING_START):
+                _start = len(DOUBLE_WAY_BINDING_START)
+                _end = len(DOUBLE_WAY_BINDING_END)
                 token_type = TOKEN_DOUBLE_WAY_BINDING
-                content = token_string[3:-2].strip()
 
-            elif CONST_START in token_string:
+            elif token_string.startswith(CONST_START):
+                _start = len(CONST_START)
+                _end = len(CONST_END)
                 token_type = TOKEN_CONST
-                content = token_string[3:-2].strip()
 
-            elif RAW_HTML_TAG_START in token_string:
+            elif token_string.startswith(RAW_HTML_TAG_START):
+                _start = len(RAW_HTML_TAG_START)
+                _end = len(RAW_HTML_TAG_END)
                 token_type = TOKEN_RAW_HTML
-                content = token_string[3:-3].strip()
 
-            elif COMMENT_START in token_string:
+            elif token_string.startswith(COMMENT_START):
+                _start = len(COMMENT_START)
+                _end = len(COMMENT_END)
                 token_type = TOKEN_COMMENT
-                content = token_string[4:-3].strip()
 
-            elif VARIABLE_TAG_START in token_string:
+            elif token_string.startswith(VARIABLE_TAG_START):
+                _start = len(VARIABLE_TAG_START)
+                _end = len(VARIABLE_TAG_END)
                 token_type = TOKEN_VAR
-                content = token_string[2:-2].strip()
 
-            elif TEXT_DIRECTIVE_START in token_string:
+            elif token_string.startswith(TEXT_DIRECTIVE_START):
+                _start = len(TEXT_DIRECTIVE_START)
+                _end = len(HTML_ATTRIBUTE_END)
                 token_type = TOKEN_DIRECTIVE
-                content = token_string[8:-1].strip()
 
-            elif HTML_DIRECTIVE_START in token_string:
+            elif token_string.startswith(HTML_DIRECTIVE_START):
+                _start = len(HTML_DIRECTIVE_START)
+                _end = len(HTML_ATTRIBUTE_END)
                 token_type = TOKEN_DIRECTIVE
-                content = token_string[8:-1].strip()
+
+            elif token_string.startswith(COLON_TEXT_DIRECTIVE_START):
+                token_type = TOKEN_DIRECTIVE
+                _start = len(COLON_TEXT_DIRECTIVE_START)
+                _end = len(HTML_ATTRIBUTE_END)
+
+            if _start is not None:
+                content = token_string[_start:-_end].strip()
 
         token = Token(token_type, content)
         token.lineno = self.lineno
