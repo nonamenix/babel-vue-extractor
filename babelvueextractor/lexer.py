@@ -34,23 +34,18 @@ DOUBLE_WAY_BINDING_START = '{{@'
 DOUBLE_WAY_BINDING_END = '}}'
 COMMENT_START = '<!--'
 COMMENT_END = '-->'
-HTML_ATTRIBUTE_END = '"'
-TEXT_DIRECTIVE_START = 'v-text="'
-HTML_DIRECTIVE_START = 'v-html="'
-COLON_TEXT_DIRECTIVE_START = '\x3atext="'  # 0x3a = ":"
+V_DIRECTIVE_PREFIX = 'v-'
+COLON_DIRECTIVE_PREFIX = '\x3a'  # 0x3a = ":"
 
-tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|(?:%s|%s|%s).*?%s)' % (
+tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|(?:%s|%s).+?=".*?")' % (
     re.escape(CONST_START), re.escape(CONST_END),
     re.escape(RAW_HTML_TAG_START), re.escape(RAW_HTML_TAG_END),
     re.escape(VARIABLE_TAG_START), re.escape(VARIABLE_TAG_END),
     re.escape(COMMENT_START), re.escape(COMMENT_END),
     re.escape(DOUBLE_WAY_BINDING_START), re.escape(DOUBLE_WAY_BINDING_END),
 
-    re.escape(TEXT_DIRECTIVE_START),
-    re.escape(HTML_DIRECTIVE_START),
-    re.escape(COLON_TEXT_DIRECTIVE_START),
-
-    re.escape(HTML_ATTRIBUTE_END),
+    V_DIRECTIVE_PREFIX,
+    COLON_DIRECTIVE_PREFIX,
 ))
 
 
@@ -136,20 +131,10 @@ class Lexer(object):
                 _end = len(VARIABLE_TAG_END)
                 token_type = TOKEN_VAR
 
-            elif token_string.startswith(TEXT_DIRECTIVE_START):
-                _start = len(TEXT_DIRECTIVE_START)
-                _end = len(HTML_ATTRIBUTE_END)
+            elif token_string.endswith('"'):
                 token_type = TOKEN_DIRECTIVE
-
-            elif token_string.startswith(HTML_DIRECTIVE_START):
-                _start = len(HTML_DIRECTIVE_START)
-                _end = len(HTML_ATTRIBUTE_END)
-                token_type = TOKEN_DIRECTIVE
-
-            elif token_string.startswith(COLON_TEXT_DIRECTIVE_START):
-                token_type = TOKEN_DIRECTIVE
-                _start = len(COLON_TEXT_DIRECTIVE_START)
-                _end = len(HTML_ATTRIBUTE_END)
+                # eg. v-text="attr" => ['v-text=', 'attr', '']
+                content = token_string.split('"')[1]
 
             if _start is not None:
                 content = token_string[_start:-_end].strip()

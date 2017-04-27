@@ -1,5 +1,8 @@
 Version History
 ===
+### 1.2.2
+* add uniform support for `v-*` and `:*` attributes
+
 ### 1.2.1
 * add support for :text attributes
 * some refactoring
