@@ -147,3 +147,9 @@ class TestMessagesExtractor(unittest.TestCase):
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
         self.assertListEqual(list(result), [(2, u'gettext', u'Sometext', [])])
 
+    def test_colon_directives(self):
+        template = FileMock("""
+        <div :html="gettext('Sometext')"></div>
+        """)
+        result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
+        self.assertListEqual(list(result), [(2, u'gettext', u'Sometext', [])])
