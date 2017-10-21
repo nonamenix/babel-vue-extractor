@@ -1,4 +1,5 @@
 import functools
+from io import BytesIO
 
 from babel.messages.extract import extract_javascript
 from babelvueextractor.lexer import (
@@ -30,7 +31,7 @@ def extract_vue(fileobj, keywords, comment_tags, options):
     for t in lexer.tokenize():  # type: Token
         if t.token_type in TOKENS:
             for i in extract_javascript(
-                    io.BytesIO(t.contents.encode(encoding=encoding)),
+                    BytesIO(t.contents.encode(encoding=encoding)),
                     keywords,
                     comment_tags,
                     options):
