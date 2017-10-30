@@ -1,5 +1,10 @@
 Version History
 ===
+
+### 1.3 
+* Python 3 compatibility
+* Use Babel's js parser 
+
 ### 1.2.2
 * add uniform support for `v-*` and `:*` attributes
 
