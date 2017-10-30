@@ -1,9 +1,7 @@
-from __future__ import unicode_literals
-import ast
 import functools
+from io import BytesIO
 
-import six
-
+from babel.messages.extract import extract_javascript
 from babelvueextractor.lexer import (
     Lexer,
     Token,
@@ -27,35 +25,15 @@ def extract_vue(fileobj, keywords, comment_tags, options):
     :return: an iterator over ``(lineno, funcname, message, comments)``
     :rtype: ``iterator``
     """
-    contents = fileobj.read()
-    u = lambda s: s if isinstance(s, six.text_type) else s.decode(encoding=options.get('encoding', 'utf-8'))
-    contents = u(contents)
+    encoding = options.get('encoding', 'utf-8')
+    contents = fileobj.read().decode(encoding=encoding)
     lexer = Lexer(contents, None)
     for t in lexer.tokenize():  # type: Token
         if t.token_type in TOKENS:
-            try:
-                tree = ast.parse(t.contents).body[0]
-            except (SyntaxError, IndexError, AttributeError):
-                pass
-            else:
-                for node in ast.walk(tree):  # type: ast.Call
-                    if (isinstance(node, ast.Call)
-                            and isinstance(node.func, ast.Name)):
-                        func_name = node.func.id
-                        args = node.args
-                        messages = None
-                        if func_name == "gettext":
-                            if len(args) != 1:
-                                raise TypeError("Error at line %s: Function gettext()"
-                                                " requires exactly one argument" % t.lineno)
-                            if isinstance(args[0], ast.Str):  # ignore other argument types such as variables
-                                messages = u(args[0].s)
-                        elif func_name == "ngettext":
-                            if len(node.args) != 3:
-                                raise TypeError("Error at line %s: Function ngettext()"
-                                                " requires exactly 3 arguments" % t.lineno)
-                            if isinstance(args[0], ast.Str) and isinstance(args[1], ast.Str):
-                                messages = u(args[0].s), u(args[1].s)
-
-                        if messages:
-                            yield t.lineno, func_name, messages, []
+            for i in extract_javascript(
+                    BytesIO(t.contents.encode(encoding=encoding)),
+                    keywords,
+                    comment_tags,
+                    options):
+                if i:
+                    yield (t.lineno, i[1], i[2], i[3])

@@ -5,19 +5,19 @@ import unittest
 from babel.messages.extract import DEFAULT_KEYWORDS, extract
 
 from babelvueextractor.extract import extract_vue
-from six import StringIO as FileMock
+from six import BytesIO as FileMock
 
 TEST_OPTIONS = {}
 
 
 class TestMessagesExtractor(unittest.TestCase):
     def test_empty_template(self):
-        template = FileMock("")
+        template = FileMock(b"")
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
         self.assertEqual(list(), list(result))
 
     def test_no_messages(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div>
             <h1>Foo</h1>
             <p>Lore ipsum delore gettext() ...</p>
@@ -27,7 +27,7 @@ class TestMessagesExtractor(unittest.TestCase):
         self.assertEqual(list(), list(result))
 
     def test_gettext(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div>
             {{ gettext('Foo') }}
         </div>
@@ -38,7 +38,7 @@ class TestMessagesExtractor(unittest.TestCase):
         ])
 
     def test_ngettext(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div>
             {{ ngettext('Foo', 'Foos', 1) }}
         </div>
@@ -48,9 +48,8 @@ class TestMessagesExtractor(unittest.TestCase):
             (3, u'ngettext', (u"Foo", u"Foos"), []),
         ])
 
-    @unittest.skip("Not using underscore because it conflicts with underscore.js")
     def test_underscore(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div>
             {{ _("Bar") }}
         </div>
@@ -61,14 +60,14 @@ class TestMessagesExtractor(unittest.TestCase):
         ])
 
     def test_token_without_content(self):
-        template = FileMock("""
+        template = FileMock(b"""
             {{  }}
         """)
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
         self.assertEqual(list(result), [])
 
     def test_commas(self):
-        template = FileMock("""
+        template = FileMock(b"""
             {{ gettext('Hello, User') }}
             {{ gettext("You're") }}
             {{ gettext("You\\"re") }}
@@ -83,16 +82,17 @@ class TestMessagesExtractor(unittest.TestCase):
 
     def test_babel(self):
         method = 'babelvueextractor.extract.extract_vue'
-        fileobj = open('babelvueextractor/tests/templates/for_babel.vhtml')
+        fileobj = open('babelvueextractor/tests/templates/for_babel.vhtml', 'rb')
         result = extract(method, fileobj)
 
         self.assertListEqual(list(result), [
             (1, u'Привет, User', [], None),
             (2, (u'Здравствуй, друг', u'Здравствуйте, друзья'), [], None)
         ])
+        fileobj.close()
 
     def test_gettext_with_parameter(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <li>
             {{ gettext('{number} season').replace("{number}", season) }}
             {{ gettext('Processed by filter')|somefilter }}
@@ -110,14 +110,14 @@ class TestMessagesExtractor(unittest.TestCase):
         ])
 
     def test_text_directives(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div v-text="gettext('Sometext')"></div>
         """)
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
         self.assertListEqual(list(result), [(2, u'gettext', u'Sometext', [])])
 
     def test_directives_with_inner_tag(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div v-text="gettext('Sometext')">
         {{ gettext('Hello') }}
         </div>
@@ -129,7 +129,7 @@ class TestMessagesExtractor(unittest.TestCase):
         ])
 
     def test_directives_with_inner_colon_tag(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div :text="gettext('Sometext')">
         {{ gettext('Hello') }}
         </div>
@@ -141,14 +141,14 @@ class TestMessagesExtractor(unittest.TestCase):
         ])
 
     def test_html_directives(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div v-html="gettext('Sometext')"></div>
         """)
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
         self.assertListEqual(list(result), [(2, u'gettext', u'Sometext', [])])
 
     def test_colon_directives(self):
-        template = FileMock("""
+        template = FileMock(b"""
         <div :html="gettext('Sometext')"></div>
         """)
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
