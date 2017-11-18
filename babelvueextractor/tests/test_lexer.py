@@ -1,6 +1,6 @@
 import unittest
 from babelvueextractor.lexer import Lexer, Token, TOKEN_TEXT, TOKEN_VAR, TOKEN_COMMENT, TOKEN_RAW_HTML, TOKEN_CONST, \
-    TOKEN_DOUBLE_WAY_BINDING
+    TOKEN_DOUBLE_WAY_BINDING, TOKEN_DIRECTIVE
 
 
 class TestLexer(unittest.TestCase):
@@ -50,6 +50,34 @@ class TestLexer(unittest.TestCase):
         self.assertTokensEqual(
             Lexer(content).tokenize(), [
                 Token(TOKEN_DOUBLE_WAY_BINDING, "foo")
+            ])
+
+    def test_v_attr(self):
+        content = "<div v-html='foo'>"
+        self.assertTokensEqual(
+            Lexer(content).tokenize(), [
+                Token(token_type=0, contents="<div "),
+                Token(TOKEN_DIRECTIVE, "foo")
+            ])
+        content = '<div v-html="bar">'
+        self.assertTokensEqual(
+            Lexer(content).tokenize(), [
+                Token(token_type=0, contents="<div "),
+                Token(TOKEN_DIRECTIVE, "bar")
+            ])
+
+    def test_colon_attr(self):
+        content = "<div :html='foo'>"
+        self.assertTokensEqual(
+            Lexer(content).tokenize(), [
+                Token(token_type=0, contents="<div "),
+                Token(TOKEN_DIRECTIVE, "foo")
+            ])
+        content = '<div :html="bar">'
+        self.assertTokensEqual(
+            Lexer(content).tokenize(), [
+                Token(token_type=0, contents="<div "),
+                Token(TOKEN_DIRECTIVE, "bar")
             ])
 
     def test_combine(self):

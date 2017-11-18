@@ -37,7 +37,7 @@ COMMENT_END = '-->'
 V_DIRECTIVE_PREFIX = 'v-'
 COLON_DIRECTIVE_PREFIX = '\x3a'  # 0x3a = ":"
 
-tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|(?:%s|%s).+?=".*?")' % (
+tag_re = re.compile('(%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|%s.*?%s|(?:%s|%s).+?=(?:".*?"|\'.*?\'))' % (
     re.escape(CONST_START), re.escape(CONST_END),
     re.escape(RAW_HTML_TAG_START), re.escape(RAW_HTML_TAG_END),
     re.escape(VARIABLE_TAG_START), re.escape(VARIABLE_TAG_END),
@@ -131,10 +131,10 @@ class Lexer(object):
                 _end = len(VARIABLE_TAG_END)
                 token_type = TOKEN_VAR
 
-            elif token_string.endswith('"'):
+            elif token_string.endswith(('"', "'")):
                 token_type = TOKEN_DIRECTIVE
                 # eg. v-text="attr" => ['v-text=', 'attr', '']
-                content = token_string.split('"')[1]
+                content = token_string.split(token_string[-1])[1]
 
             if _start is not None:
                 content = token_string[_start:-_end].strip()
