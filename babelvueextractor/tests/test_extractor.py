@@ -153,3 +153,13 @@ class TestMessagesExtractor(unittest.TestCase):
         """)
         result = extract_vue(template, DEFAULT_KEYWORDS.keys(), [], TEST_OPTIONS)
         self.assertListEqual(list(result), [(2, u'gettext', u'Sometext', [])])
+
+    def test_vue_file(self):
+        method = 'babelvueextractor.extract.extract_vue'
+        with open('babelvueextractor/tests/templates/for_babel.vue', 'rb') as f:
+            result = extract(method, f)
+
+            self.assertListEqual(list(result), [
+                (2, u'Xin chào, Babel', [], None),
+                (9, u'Tôi là một chú hươu nhỏ', [], None)
+            ])
