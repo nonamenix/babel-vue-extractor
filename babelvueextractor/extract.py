@@ -1,3 +1,4 @@
+import re
 import functools
 from io import BytesIO
 
@@ -37,3 +38,12 @@ def extract_vue(fileobj, keywords, comment_tags, options):
                     options):
                 if i:
                     yield (t.lineno, i[1], i[2], i[3])
+    # Inline JS part
+    matchjs = re.search(r'<script>(.+)</script>', contents, re.DOTALL)
+    if not matchjs:
+        return
+    jscontent = matchjs.group(1)
+    skipped_line_count = contents[:matchjs.start(1)].count('\n')
+    for i in extract_javascript(BytesIO(jscontent.encode(encoding=encoding)),
+                                keywords, comment_tags, options):
+        yield (skipped_line_count + i[0], i[1], i[2], i[3])
