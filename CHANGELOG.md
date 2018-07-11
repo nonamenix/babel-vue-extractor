@@ -1,7 +1,7 @@
 Version History
 ===
 
-### 1.4.2
+### 1.4.3
 
 * Add `.vue` files support
 
