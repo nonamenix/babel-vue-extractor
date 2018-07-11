@@ -1,6 +1,10 @@
 Version History
 ===
 
+### 1.4.2
+
+* Add `.vue` files support
+
 ### 1.3 
 * Python 3 compatibility
 * Use Babel's js parser 
