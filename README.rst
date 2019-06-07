@@ -1,7 +1,14 @@
-Babel extractor for vue.js
-==========================
+Babel extractor for vue.js [DEPRECATED]
+=======================================
 
-|Build Status| |Coverage Status|
+|Build Status| |Coverage Status| |Deprecated| 
+
+
+Why deprecated?
+---------------
+
+Just retrieve l10n strings from compiled `.js` files.
+
 
 Babel messages extractor for vue.js templates.
 
@@ -56,4 +63,7 @@ GitHub: `https://github.com/nonamenix/babel-vue-extractor/issues <https://github
 .. |Coverage Status| image:: https://coveralls.io/repos/nonamenix/babel-vue-extractor/badge.svg?branch=master&service=github&v=0.1.3.1
    :target: https://coveralls.io/github/nonamenix/babel-vue-extractor?branch=master
    :alt: Coverage Status
+   
+.. |Deprecated| image:: https://img.shields.io/badge/-deprecated-critical.svg
+   :alt: Deprecated
    
