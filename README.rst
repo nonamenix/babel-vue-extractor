@@ -9,6 +9,9 @@ Why deprecated?
 
 Just retrieve l10n strings from compiled `.js` files.
 
+Description
+-----------
+
 
 Babel messages extractor for vue.js templates.
 
